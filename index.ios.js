@@ -12,12 +12,12 @@ var {
   View,
 } = React;
 
-var GithubNotetaker = React.createClass({
-  render: function() {
+class GithubNotetaker extends React.Component {
+  render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to GithubNotetaker!
+          Welcome to GithubNotetaker!!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -29,7 +29,7 @@ var GithubNotetaker = React.createClass({
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {
