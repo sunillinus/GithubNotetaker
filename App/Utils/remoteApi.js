@@ -1,5 +1,5 @@
 var remoteApi = {
-  getBio(username) {
+  getProfile(username) {
     return this.getURL(`https://api.github.com/users/${username}`);
   },
 
@@ -8,9 +8,7 @@ var remoteApi = {
   },
 
   getURL(url) {
-    return fetch(url).then(function(res) {
-      return res.json();
-    });
+    return fetch(url).then((res) => res.json());
   }
 }
 

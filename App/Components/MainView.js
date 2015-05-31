@@ -1,5 +1,6 @@
 var React = require('react-native');
 var remoteApi = require('../Utils/remoteApi');
+var Dashboard = require('./Dashboard');
 
 var {
   View,
@@ -25,24 +26,23 @@ class MainView extends React.Component {
   }
 
   handleSubmit() {
-    var user = this.state.username;
     // update spinner
     this.setState({isLoading: true});
     console.log('SUBMIT', this.state.username);
 
-    remoteApi.getBio(this.state.username).then(function(res) {
+    remoteApi.getProfile(this.state.username).then((res) => {
       if (res.message === 'Not Found') {
-        console.log('ERROR', `User: ${user} Not Found`);
+        console.log('ERROR', `User: "${this.state.username}" Not Found`);
         this.setState({
-          error: 'User Not Found',
+          error: `User "${this.state.username}" Not Found`,
           isLoading: false,
         });
       } else {
-        console.log('SUCCESS', res);
+        console.log('USER', res);
         this.props.navigator.push({
-          title: res.name || 'Select an Option',
+          title: res.name || "Select an Option",
           component: Dashboard,
-          passProps: {userInfo: res}
+          passProps: {userInfo: res, username: this.state.username}
         });
         this.setState({
           error: false,
@@ -54,6 +54,7 @@ class MainView extends React.Component {
   }
 
   render() {
+    var errorMsg = this.state.error? <Text>{this.state.error}</Text> : <View></View>;
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Search for a Github User</Text>
@@ -61,6 +62,11 @@ class MainView extends React.Component {
         <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="white">
           <Text style={styles.buttonText}> SEARCH </Text>
         </TouchableHighlight>
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color="#111"
+          size="large"></ActivityIndicatorIOS>
+        {errorMsg}
       </View>
     );
   }

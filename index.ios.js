@@ -19,10 +19,11 @@ class GithubNotetaker extends React.Component {
   render() {
     return (
       <NavigatorIOS
+        ref="nav"
         style={styles.container}
         initialRoute={{
           component: MainView,
-          title: 'Github Note Taker',
+          title: 'Github Profiler',
         }}
       />
     );
